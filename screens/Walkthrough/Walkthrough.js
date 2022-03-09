@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, Animated, Text} from 'react-native';
-import {TextButtom} from '../../components';
+import {TextButton} from '../../components';
 import {COLORS, SIZES, constants, FONTS} from '../../constants';
+import Walkthrough1 from './Walkthrough1';
 
 const Walkthrough = () => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -53,6 +54,28 @@ const Walkthrough = () => {
           paddingVertical: SIZES.height > 700 ? SIZES.padding : 20,
         }}>
         <Dots />
+        {/* Buttons */}
+        <View style={{flexDirection: 'row', height: 50}}>
+          <TextButton
+            label="Join now"
+            contentContainerStyle={{
+              flex: 1,
+              borderRadius: SIZES.radius,
+              backgroundColor: COLORS.lightGrey,
+            }}
+            labelStyle={{color: COLORS.primary, ...FONTS.h3}}
+          />
+          <TextButton
+            label="Log in"
+            contentContainerStyle={{
+              flex: 1,
+              borderRadius: SIZES.radius,
+              marginLeft: SIZES.radius,
+              backgroundColor: COLORS.primary,
+            }}
+            labelStyle={{...FONTS.h3}}
+          />
+        </View>
       </View>
     );
   };
@@ -78,7 +101,9 @@ const Walkthrough = () => {
                 justifyContent: 'center',
               }}>
               {/* Walkthrough Images  */}
-              <View style={{flex: 1}}></View>
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                {index === 0 && <Walkthrough1 />}
+              </View>
 
               {/* Title & Description */}
               <View
