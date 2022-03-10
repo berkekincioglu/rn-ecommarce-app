@@ -52,6 +52,26 @@ const Walkthrough1 = () => {
 
         // Slider 2
 
+        setRow2CurrentPosition(prevPosition => {
+          const position = Number(prevPosition) + 1;
+
+          row2FlatListRef?.current?.scrollToOffset({
+            offset: position,
+            animated: false,
+          });
+          const maxOffset =
+            constants.walkthrough_01_02_images.length * ITEM_WIDTH;
+
+          if (prevPosition > maxOffset) {
+            const offset = prevPosition - maxOffset;
+            row2FlatListRef?.current?.scrollToOffset({offset, animated: false});
+
+            return offset;
+          } else {
+            return position;
+          }
+        });
+
         timer();
       }, 32);
     };
@@ -93,6 +113,7 @@ const Walkthrough1 = () => {
       <FlatList
         ref={row2FlatListRef}
         data={row2Images}
+        style={{marginTop: SIZES.padding, transform: [{rotateY: '180deg'}]}}
         horizontal
         showsHorizontalScrollIndicator={false}
         listKey="Slider2"
@@ -104,7 +125,6 @@ const Walkthrough1 = () => {
             <View
               style={{
                 width: ITEM_WIDTH,
-                marginTop: SIZES.padding,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
