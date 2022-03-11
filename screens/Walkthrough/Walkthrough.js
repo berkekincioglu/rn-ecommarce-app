@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import {View, Animated, Text} from 'react-native';
+
 import {TextButton} from '../../components';
 import {COLORS, SIZES, constants, FONTS} from '../../constants';
 import Walkthrough1 from './Walkthrough1';
 
+import Walkthrough2 from './Walkthrough2';
+
 const Walkthrough = () => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
+
+  const [walkthrough2Animate, setWalkthrough2Animate] = useState(false);
+  const onViewChangeRef = useRef(({viewableItems, changed}) => {
+    if (viewableItems[0].index === 1) {
+      setWalkthrough2Animate(true);
+    }
+  });
 
   const Dots = () => {
     const dotPosition = Animated.divide(scrollX, SIZES.width);
@@ -88,6 +98,7 @@ const Walkthrough = () => {
         horizontal
         snapToInterval={SIZES.width}
         showsHorizontalScrollIndicator={false}
+        onViewableItemsChanged={onViewChangeRef.current}
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {x: scrollX}}}],
@@ -103,6 +114,7 @@ const Walkthrough = () => {
               {/* Walkthrough Images  */}
               <View style={{flex: 1, justifyContent: 'center'}}>
                 {index === 0 && <Walkthrough1 />}
+                {index === 1 && <Walkthrough2 animate={walkthrough2Animate} />}
               </View>
 
               {/* Title & Description */}
